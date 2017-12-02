@@ -85,7 +85,9 @@
 				container = document.getElementById( 'container' );
 
 				camera = new THREE.PerspectiveCamera( 30, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000 );
-				camera.position.z = 2200;
+				camera.position.z = 3000;
+				camera.position.y = 100;
+				camera.positoin.x = -100;
 
 				scene = new THREE.Scene();
 				scene.background = new THREE.Color( 0xffffff );
@@ -218,7 +220,7 @@
 				mesh.name = "Knight Mesh";
 				mesh.position.set( x + 500, y - bb.min.y * s, z );
 				mesh.scale.set( s, s, s );
-				mesh.rotation.y = -1.6;
+				mesh.rotation.y = -1.2;
 				scene.add( mesh );
 
 				mesh.castShadow = true;
@@ -231,9 +233,9 @@
 
 				mesh2 = new THREE.SkinnedMesh( geometry, materials );
 				mesh2.name = "Knight Mesh 2";
-				mesh2.position.set( x - 500, y , z + 450);
+				mesh2.position.set( x - 500, y , z);
 				mesh2.scale.set( s, s, s );
-				mesh2.rotation.y = 2.7;
+				mesh2.rotation.y = 2.1;
 				scene.add( mesh2 );
 
 				mesh2.castShadow = true;
