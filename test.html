@@ -35,7 +35,7 @@
 	</head>
 
 	<body>
-            <button id="btn" onclick="startGyro()">Start Gyro</button>
+    <button id="btn" onclick="startGyro()">Start Gyro</button>
 		<div id="container"></div>
 
 		<div id="info">
@@ -223,28 +223,30 @@
 				mesh.castShadow = true;
 				mesh.receiveShadow = true;
 
-
-				mesh2 = new THREE.SkinnedMesh( geometry, materials );
-				mesh2.name = "Lil' Bro Mesh";
-				mesh2.position.set( x - 240, y - bb.min.y * s, z + 500 );
-				mesh2.scale.set( s / 2, s / 2, s / 2 );
-				mesh2.rotation.y = THREE.Math.degToRad( 60 );
-
-				mesh2.visible = false;
-
-				mesh2.castShadow = true;
-				mesh2.receiveShadow = true;
-				scene.add( mesh2 );
-
 				helper = new THREE.SkeletonHelper( mesh );
 				helper.material.linewidth = 3;
 				helper.visible = false;
 				scene.add( helper );
 
-				mixer = new THREE.AnimationMixer( mesh );
+				// mesh2 = new THREE.SkinnedMesh( geometry, materials );
+				// mesh2.name = "Knight Mesh 2";
+				// mesh2.position.set( x, y - bb.min.y * s, z );
+				// mesh2.scale.set( s, s, s );
+				// scene.add( mesh2 );
+        //
+				// mesh2.castShadow = true;
+				// mesh2.receiveShadow = true;
+        //
+				// helper2 = new THREE.SkeletonHelper( mesh2 );
+				// helper2.material.linewidth = 3;
+				// helper2.visible = false;
+				// scene.add( helper2 );
 
-				bonesClip = geometry.animations[0];
+				// mixer = new THREE.AnimationMixer( mesh );
+        //
+				// bonesClip = geometry.animations[0];
 				facesClip = THREE.AnimationClip.CreateFromMorphTargetSequence( 'facialExpressions', mesh.geometry.morphTargets, 3 );
+				// facesClip2 = THREE.AnimationClip.CreateFromMorphTargetSequence( 'facialExpressions', mesh2.geometry.morphTargets, 3 );
 
 			}
 
@@ -665,8 +667,8 @@
 			}
 
         </script>
-        
-        
+
+
   <script src="/socket.io/socket.io.js"></script>
   <script src="gyro.js"></script>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
