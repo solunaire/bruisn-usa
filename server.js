@@ -3,7 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-app.use(app.static('public'));
+app.use(express.static('public'));
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
