@@ -245,7 +245,7 @@
 				mixer = new THREE.AnimationMixer( mesh );
 				mixer2 = new THREE.AnimationMixer( mesh2 );
 
-				// bonesClip = geometry.animations[0];
+				bonesClip = geometry.animations[0];
 				facesClip = THREE.AnimationClip.CreateFromMorphTargetSequence( 'facialExpressions', mesh.geometry.morphTargets, 3 );
 				facesClip2 = THREE.AnimationClip.CreateFromMorphTargetSequence( 'facialExpressions', mesh2.geometry.morphTargets, 3 );
 
@@ -256,7 +256,7 @@
 				var API = {
 					'show model'    	: true,
 					'show skeleton'		: false,
-					'show 2nd model'	: false,
+					'show 2nd model'	: true,
 					'show mem. info'	: false
 				};
 
