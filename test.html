@@ -613,6 +613,8 @@
 
 				memoryControl( gui, mixer,
 						[ bonesClip, facesClip ], [ mesh, mesh2 ] );
+				memoryControl( gui, mixer2,
+								[ bonesClip, facesClip ], [ mesh, mesh2 ] );
 
 
 			}
@@ -678,6 +680,7 @@
       saket = io();
       saket.on('rotate', function (data) {
         mesh.skeleton.bones[79].quaternion.set(data.qx,data.qy,data.qz,data.qw)
+				mesh2.skeleton.bones[79].quaternion.set(data.qx,data.qy,data.qz,data.qw)
       });
     });
 
