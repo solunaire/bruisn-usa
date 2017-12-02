@@ -218,6 +218,7 @@
 				mesh.name = "Knight Mesh";
 				mesh.position.set( x, y - bb.min.y * s, z );
 				mesh.scale.set( s, s, s );
+				mesh.rotation.y = -1.2;
 				scene.add( mesh );
 
 				mesh.castShadow = true;
@@ -230,9 +231,9 @@
 
 				mesh2 = new THREE.SkinnedMesh( geometry, materials );
 				mesh2.name = "Knight Mesh 2";
-				mesh2.position.set( x - 600, y , z + 300 );
+				mesh2.position.set( x - 900, y , z + 300 );
 				mesh2.scale.set( s, s, s );
-				mesh2.rotation.y=Math.PI;
+				mesh2.rotation.y = 2.1;
 				scene.add( mesh2 );
 
 				mesh2.castShadow = true;
