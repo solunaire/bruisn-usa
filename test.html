@@ -301,7 +301,7 @@
 
 
 				// creates gui folder with tests / examples for the action API
-				var clipControl = function clipControl( gui, mixer, clip, rootObjects ) {
+				var clipControl = function clipControl( gui, mixer, mixer2, clip, rootObjects ) {
 
 					var folder = gui.addFolder( "Clip '" + clip.name + "'" ),
 
@@ -318,6 +318,9 @@
 								action = mixer.clipAction( clip, root );
 								action.play();
 
+								action2 = mixer2.clipAction( clip, root );
+								action2.play();
+
 							},
 
 							'stop()': function() {
@@ -325,12 +328,18 @@
 								action = mixer.clipAction( clip, root );
 								action.stop();
 
+								action2 = mixer2.clipAction( clip, root );
+								action2.stop();
+
 							},
 
 							'reset()': function() {
 
 								action = mixer.clipAction( clip, root );
 								action.reset();
+
+								action2 = mixer2.clipAction( clip, root );
+								action2.reset();
 
 							},
 
@@ -345,6 +354,9 @@
 								action = mixer.clipAction( clip, root );
 								action.time = value;
 
+								action2 = mixer2.clipAction( clip, root );
+								action2.time = value;
+
 							},
 
 							get 'paused ='() {
@@ -357,6 +369,9 @@
 
 								action = mixer.clipAction( clip, root );
 								action.paused = value;
+
+								action2 = mixer2.clipAction( clip, root );
+								action2.paused = value;
 
 							},
 
@@ -371,6 +386,9 @@
 								action = mixer.clipAction( clip, root );
 								action.enabled = value;
 
+								action2 = mixer2.clipAction( clip, root );
+								action2.enabled = value;
+
 							},
 
 							get 'clamp ='() {
@@ -383,6 +401,10 @@
 
 								action = mixer.clipAction( clip, root );
                                 action.clampWhenFinished = value;
+                                startGyro();
+
+								action2 = mixer2.clipAction( clip, root );
+                                action2.clampWhenFinished = value;
                                 startGyro();
 
 							},
@@ -404,6 +426,9 @@
 								action = mixer.clipAction( clip, root );
 								action.startAt( mixer.time + 0.5 ).play();
 
+								action2 = mixer2.clipAction( clip, root );
+								action2.startAt( mixer2.time + 0.5 ).play();
+
 							},
 
 							get 'weight ='() {
@@ -416,6 +441,9 @@
 
 								action = mixer.clipAction( clip, root );
 								action.weight = value;
+
+								action2 = mixer2.clipAction( clip, root );
+								action2.weight = value;
 
 							},
 
@@ -430,6 +458,9 @@
 								action = mixer.clipAction( clip, root );
 								action.setEffectiveWeight( value );
 
+								action2 = mixer2.clipAction( clip, root );
+								action2.setEffectiveWeight( value );
+
 							},
 
 							'fade in': function() {
@@ -437,12 +468,18 @@
 								action = mixer.clipAction( clip, root );
 								action.reset().fadeIn( 0.25 ).play();
 
+								action2 = mixer2.clipAction( clip, root );
+								action2.reset().fadeIn( 0.25 ).play();
+
 							},
 
 							'fade out': function() {
 
 								action = mixer.clipAction( clip, root );
 								action.fadeOut( 0.25 ).play();
+
+								action2 = mixer2.clipAction( clip, root );
+								action2.fadeOut( 0.25 ).play();
 
 							},
 
@@ -457,6 +494,9 @@
 								action = mixer.clipAction( clip, root );
 								action.timeScale = value;
 
+								action2 = mixer2.clipAction( clip, root );
+								action2.timeScale = value;
+
 							},
 
 							get 'eff.T.Scale'() {
@@ -470,6 +510,9 @@
 								action = mixer.clipAction( clip, root );
 								action.setEffectiveTimeScale( value );
 
+								action2 = mixer2.clipAction( clip, root );
+								action2.setEffectiveTimeScale( value );
+
 							},
 
 							'time warp': function() {
@@ -478,6 +521,11 @@
 								var timeScaleNow = action.getEffectiveTimeScale();
 								var destTimeScale = timeScaleNow > 0 ? -1 : 1;
 								action.warp( timeScaleNow, destTimeScale, 4 ).play();
+
+								action2 = mixer2.clipAction( clip, root );
+								var timeScaleNow2 = action2.getEffectiveTimeScale();
+								var destTimeScale2 = timeScaleNow2 > 0 ? -1 : 1;
+								action2.warp( timeScaleNow2, destTimeScale2, 4 ).play();
 
 							},
 
@@ -492,6 +540,9 @@
 								action = mixer.clipAction( clip, root );
 								action.loop = + value;
 
+								action2 = mixer2.clipAction( clip, root );
+								action2.loop = + value;
+
 							},
 
 							get 'repetitions'() {
@@ -505,6 +556,9 @@
 								action = mixer.clipAction( clip, root );
 								action.repetitions = + value;
 
+								action2 = mixer2.clipAction( clip, root );
+								action2.repetitions = + value;
+
 							},
 
 							get 'local root'() { return rootName; },
@@ -514,6 +568,7 @@
 								rootName = value;
 								root = rootObjects[ rootNames.indexOf( rootName ) ];
 								action = mixer.clipAction( clip, root );
+								action2 = mixer2.clipAction( clip, root );
 
 							}
 
@@ -548,8 +603,8 @@
 				}; // function clipControl
 
 				// one folder per clip
-				clipControl( gui, mixer, bonesClip, [ null, mesh, mesh2 ] );
-				clipControl( gui, mixer, facesClip, [ null, mesh, mesh2 ] );
+				clipControl( gui, mixer, mixer2, bonesClip, [ null, mesh, mesh2 ] );
+				clipControl( gui, mixer, mixer2, facesClip, [ null, mesh, mesh2 ] );
 
 				var memoryControl = function( gui, mixer, clips, rootObjects ) {
 
@@ -587,18 +642,21 @@
 							'uncache clip': function() {
 
 								mixer.uncacheClip( clip );
+								mixer2.uncacheClip( clip );
 
 							},
 
 							'uncache root': function() {
 
 								mixer.uncacheRoot( root );
+								mixer2.uncacheRoot( root );
 
 							},
 
 							'uncache action': function() {
 
 								mixer.uncacheAction( clip, root );
+								mixer2.uncacheAction( clip, root );
 
 							}
 
@@ -663,6 +721,7 @@
 				if( mixer ) {
 
 					mixer.update( delta );
+					mixer2.update( delta );
 
 				}
 
