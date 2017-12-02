@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Bruis'n USA</title>
+  </head>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="gyro.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script>
+    $(function () {
+      var saket = io();
+      gyro.startTracking(funciton(o) {
+        var X = document.getElementById('gyroX');
+        var Y = document.getElementById('gyroY');
+        var Z = document.getElementById('gyroZ');
+      });
+    });
+  </script>
+
+  <body>
+    <h1 id = "gyroX">N/A</h1>
+    <h1 id = "gyroY">N/A</h1>
+    <h1 id = "gyroZ">N/A</h1>
+  </body>
+</html>
