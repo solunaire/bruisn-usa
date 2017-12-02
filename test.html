@@ -243,8 +243,9 @@
 				scene.add( helper2 );
 
 				mixer = new THREE.AnimationMixer( mesh );
+				mixer2 = new THREE.AnimationMixer( mesh2 );
 
-				bonesClip = geometry.animations[0];
+				// bonesClip = geometry.animations[0];
 				facesClip = THREE.AnimationClip.CreateFromMorphTargetSequence( 'facialExpressions', mesh.geometry.morphTargets, 3 );
 				facesClip2 = THREE.AnimationClip.CreateFromMorphTargetSequence( 'facialExpressions', mesh2.geometry.morphTargets, 3 );
 
