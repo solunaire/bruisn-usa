@@ -27,7 +27,11 @@
 				z: null,
 				alpha: null,
 				beta: null,
-				gamma: null
+				gamma: null,
+				qx: null,
+				qy: null,
+				qz: null,
+				qw: null
 			},
 			calibration = {
 				x: 0,
@@ -224,6 +228,12 @@
 					measurements.alpha = calibEuler.alpha;
 					measurements.beta = calibEuler.beta;
 					measurements.gamma = calibEuler.gamma;
+
+					measurements.qx = calibrated.x;
+					measurements.qy = calibrated.y;
+					measurements.qz = calibrated.z;
+					measurements.qw = calibrated.w;
+
 
 					measurements.rawAlpha = e.alpha;
 					measurements.rawBeta = e.beta;

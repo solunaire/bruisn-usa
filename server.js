@@ -6,7 +6,7 @@ var io = require('socket.io')(http);
 app.use(express.static('public'));
 
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/test.html');
 });
 
 io.on('connection', function(socket){
@@ -15,6 +15,10 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     console.log('user disconnected');
   });
+
+  socket.on('rotation', function(data){
+    io.emit('rotate',data);
+  })
 
   socket.on('chat message', function(data){
     console.log(data);
