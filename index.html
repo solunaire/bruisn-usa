@@ -10,10 +10,11 @@
   <script>
     $(function () {
       var saket = io();
-      gyro.startTracking(funciton(o) {
+      gyro.startTracking(function(o) {
         var X = document.getElementById('gyroX');
         var Y = document.getElementById('gyroY');
         var Z = document.getElementById('gyroZ');
+        saket.emit('chat message', o);
       });
     });
   </script>
