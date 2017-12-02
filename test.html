@@ -228,25 +228,25 @@
 				helper.visible = false;
 				scene.add( helper );
 
-				// mesh2 = new THREE.SkinnedMesh( geometry, materials );
-				// mesh2.name = "Knight Mesh 2";
-				// mesh2.position.set( x, y - bb.min.y * s, z );
-				// mesh2.scale.set( s, s, s );
-				// scene.add( mesh2 );
-        //
-				// mesh2.castShadow = true;
-				// mesh2.receiveShadow = true;
-        //
-				// helper2 = new THREE.SkeletonHelper( mesh2 );
-				// helper2.material.linewidth = 3;
-				// helper2.visible = false;
-				// scene.add( helper2 );
+				mesh2 = new THREE.SkinnedMesh( geometry, materials );
+				mesh2.name = "Knight Mesh 2";
+				mesh2.position.set( x, y , z );
+				mesh2.scale.set( s, s, s );
+				scene.add( mesh2 );
 
-				// mixer = new THREE.AnimationMixer( mesh );
-        //
-				// bonesClip = geometry.animations[0];
+				mesh2.castShadow = true;
+				mesh2.receiveShadow = true;
+
+				helper2 = new THREE.SkeletonHelper( mesh2 );
+				helper2.material.linewidth = 3;
+				helper2.visible = false;
+				scene.add( helper2 );
+
+				mixer = new THREE.AnimationMixer( mesh );
+
+				bonesClip = geometry.animations[0];
 				facesClip = THREE.AnimationClip.CreateFromMorphTargetSequence( 'facialExpressions', mesh.geometry.morphTargets, 3 );
-				// facesClip2 = THREE.AnimationClip.CreateFromMorphTargetSequence( 'facialExpressions', mesh2.geometry.morphTargets, 3 );
+				facesClip2 = THREE.AnimationClip.CreateFromMorphTargetSequence( 'facialExpressions', mesh2.geometry.morphTargets, 3 );
 
 			}
 
