@@ -63,7 +63,7 @@
         var camera, scene;
         var renderer;
 
-        var mesh, mesh2, helper;
+        var red, blue, helper;
 
         var mixer, facesClip, bonesClip;
 
@@ -254,44 +254,44 @@
             });
 
 
-            mesh = new THREE.SkinnedMesh(geometry, materials);
-            mesh.name = "Knight Mesh";
-            mesh.position.set(x + 500, y - bb.min.y * s, z);
-            mesh.scale.set(s, s, s);
-            mesh.rotation.y = -1.2;
-            scene.add(mesh);
+            red = new THREE.SkinnedMesh(geometry, materials);
+            red.name = "Red Knight";
+            red.position.set(x + 500, y - bb.min.y * s, z);
+            red.scale.set(s, s, s);
+            red.rotation.y = -1.2;
+            scene.add(red);
 
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
+            red.castShadow = true;
+            red.receiveShadow = true;
 
-            helper = new THREE.SkeletonHelper(mesh);
+            helper = new THREE.SkeletonHelper(red);
             helper.material.linewidth = 3;
             helper.visible = false;
             scene.add(helper);
 
-            mesh2 = new THREE.SkinnedMesh(geometry, materials);
-            mesh2.name = "Knight Mesh 2";
-            mesh2.position.set(x - 500, y, z);
-            mesh2.scale.set(s, s, s);
-            mesh2.rotation.y = 2.1;
-            scene.add(mesh2);
+            blue = new THREE.SkinnedMesh(geometry, materials);
+            blue.name = "Blue Knight";
+            blue.position.set(x - 500, y, z);
+            blue.scale.set(s, s, s);
+            blue.rotation.y = 2.1;
+            scene.add(blue);
 
 
 
-            mesh2.castShadow = true;
-            mesh2.receiveShadow = true;
+            blue.castShadow = true;
+            blue.receiveShadow = true;
 
-            helper2 = new THREE.SkeletonHelper(mesh2);
+            helper2 = new THREE.SkeletonHelper(blue);
             helper2.material.linewidth = 3;
             helper2.visible = false;
             scene.add(helper2);
 
-            mixer = new THREE.AnimationMixer(mesh);
-            mixer2 = new THREE.AnimationMixer(mesh2);
+            mixer = new THREE.AnimationMixer(red);
+            mixer2 = new THREE.AnimationMixer(blue);
 
             bonesClip = geometry.animations[0];
-            facesClip = THREE.AnimationClip.CreateFromMorphTargetSequence('facialExpressions', mesh.geometry.morphTargets, 3);
-            facesClip2 = THREE.AnimationClip.CreateFromMorphTargetSequence('facialExpressions', mesh2.geometry.morphTargets, 3);
+            facesClip = THREE.AnimationClip.CreateFromMorphTargetSequence('facialExpressions', red.geometry.morphTargets, 3);
+            facesClip2 = THREE.AnimationClip.CreateFromMorphTargetSequence('facialExpressions', blue.geometry.morphTargets, 3);
 
         }
 
@@ -307,7 +307,7 @@
             var gui = new dat.GUI();
 
             gui.add(API, 'show model').onChange(function () {
-                mesh.visible = API['show model'];
+                red.visible = API['show model'];
             });
 
             gui.add(API, 'show skeleton').onChange(function () {
@@ -316,7 +316,7 @@
             });
 
             gui.add(API, 'show 2nd model').onChange(function () {
-                mesh2.visible = API['show 2nd model'];
+                blue.visible = API['show 2nd model'];
             });
 
 
@@ -648,8 +648,8 @@
             }; // function clipControl
 
             // one folder per clip
-            clipControl(gui, mixer, mixer2, bonesClip, [null, mesh, mesh2]);
-            clipControl(gui, mixer, mixer2, facesClip, [null, mesh, mesh2]);
+            clipControl(gui, mixer, mixer2, bonesClip, [null, red, blue]);
+            clipControl(gui, mixer, mixer2, facesClip, [null, red, blue]);
 
             var memoryControl = function (gui, mixer, clips, rootObjects) {
 
@@ -716,9 +716,9 @@
             };
 
             memoryControl(gui, mixer,
-                [bonesClip, facesClip], [mesh, mesh2]);
+                [bonesClip, facesClip], [red, blue]);
             memoryControl(gui, mixer2,
-                [bonesClip, facesClip], [mesh, mesh2]);
+                [bonesClip, facesClip], [red, blue]);
 
 
         }
@@ -784,8 +784,8 @@
         $(function () {
             saket = io();
             saket.on('rotate', function (data) {
-                mesh.skeleton.bones[79].quaternion.set(data.qx, data.qy, data.qz, data.qw)
-                mesh2.skeleton.bones[79].quaternion.set(data.qx, data.qy, data.qz, data.qw)
+                red.skeleton.bones[79].quaternion.set(data.qx, data.qy, data.qz, data.qw)
+                blue.skeleton.bones[79].quaternion.set(data.qx, data.qy, data.qz, data.qw)
             });
         });
 

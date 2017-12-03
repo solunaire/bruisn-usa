@@ -59,6 +59,20 @@
       saket.on('rotate', function (data) {
         mesh.quaternion.set(data.qx,data.qy,data.qz,data.qw)
       });
+
+      saket.on('type', function(data) {
+        switch(data) {
+          case 'host':
+            break;
+          case 'blue':
+            break;
+          case 'red':
+            break;
+          case 'other':
+            //alert full
+            break;
+        }
+      });
     });
 
     function startGyro() {
