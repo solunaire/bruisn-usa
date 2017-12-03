@@ -37,14 +37,11 @@
 </head>
 
 <body>
-    <button id="btn" onclick="startGyro()">Start Gyro</button>
-    <div id="container"></div>
 
-    <div id="info">
-        <a href="http://threejs.org" target="_blank" rel="noopener">three.js</a> webgl - clip system - knight by
-        <a href="http://vimeo.com/36113323">apendua</a>
-        <div id="meminfo"></div>
-    </div>
+    <audio loop autoplay>
+        <source src="./music.mp3" type="audio/mpeg"> Your browser does not support the audio element.
+    </audio>
+    <div id="container"></div>
 
     <script src="https://threejs.org/build/three.js"></script>
 
@@ -94,7 +91,7 @@
 
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0xffffff);
-            scene.fog = new THREE.Fog(0xffffff, 2000, 10000);
+            //scene.fog = new THREE.Fog(0xffffff, 2000, 10000);
 
             scene.add(camera);
 
@@ -157,7 +154,7 @@
             //
 
             var loader = new THREE.JSONLoader();
-            loader.load("https://threejs.org/examples/models/skinned/knight.js", function (geometry, materials) {
+            loader.load("./knight.js", function (geometry, materials) {
 
                 createScene(geometry, materials, 0, FLOOR, -300, 60);
 
@@ -255,6 +252,7 @@
 
 
             red = new THREE.SkinnedMesh(geometry, materials);
+            red.material[0].color = new THREE.Color(0xFF1111)
             red.name = "Red Knight";
             red.position.set(x + 500, y - bb.min.y * s, z);
             red.scale.set(s, s, s);
@@ -268,8 +266,8 @@
             helper.material.linewidth = 3;
             helper.visible = false;
             scene.add(helper);
-
-            blue = new THREE.SkinnedMesh(geometry, materials);
+            blue = new THREE.SkinnedMesh(geometry, [materials[0].clone()]);
+            blue.material[0].color = new THREE.Color(0x1111FF)
             blue.name = "Blue Knight";
             blue.position.set(x - 500, y, z);
             blue.scale.set(s, s, s);
@@ -297,7 +295,7 @@
 
         function initGUI() {
 
-            var API = {
+            API = {
                 'show model': true,
                 'show skeleton': false,
                 'show 2nd model': true,
@@ -644,8 +642,8 @@
                 folder.add(API, 'local root', rootNames);
 
                 API['play()']();
-                API['paused =']=true;
-                API['time =']=1.1810286835044066;
+                API['paused ='] = true;
+                API['time ='] = 1.1810286835044066;
 
             }; // function clipControl
 
@@ -785,18 +783,66 @@
     <script>
         $(function () {
             saket = io();
-            saket.on('rotate', function (data) {
-                red.skeleton.bones[79].quaternion.set(data.qx, data.qy, data.qz, data.qw)
-                blue.skeleton.bones[79].quaternion.set(data.qx, data.qy, data.qz, data.qw)
+
+            saket.on('type', function (data) {
+                switch (data) {
+                    case 'host':
+                        $("#.dg").remove();
+                        saket.on('rotate', function (data) {
+                            var invert = new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.PI, Math.PI, Math.PI));
+                            var orig = new THREE.Quaternion(data.qx, data.qy, data.qz, data.qw);
+                            orig = orig.multiply(invert).inverse();
+                            console.log(orig);
+                            switch (data.color) {
+                                case 'red':
+                                    red.skeleton.bones[79].quaternion.set(orig.x, orig.y, orig.z, orig.w);
+                                    break;
+                                case 'blue':
+                                    blue.skeleton.bones[79].quaternion.set(orig.x, orig.y, orig.z, orig.w);
+                                    break;
+                            }
+                        });
+                        break;
+                    case 'blue':
+                        API['paused ='] = true;
+                        $("#container").remove();
+                        $(".dg").remove();
+                        $("body").css('background-color', 'blue');
+                        startGyro('blue');
+                        break;
+                    case 'red':
+                        API['paused ='] = true;
+                        $("#container").remove();
+                        $(".dg").remove();
+                        $("body").css('background-color', 'red');
+                        startGyro('red');
+                        break;
+                    case 'other':
+                        alert("Full");
+                        $("#.dg").remove();
+                        saket.on('rotate', function (data) {
+                            var invert = new THREE.Quaternion().setFromEuler(new THREE.Euler(Math.PI, Math.PI, Math.PI));
+                            var orig = new THREE.Quaternion(data.qx, data.qy, data.qz, data.qw);
+                            orig = orig.multiply(invert).inverse();
+                            console.log(orig);
+                            switch (data.color) {
+                                case 'red':
+                                    red.skeleton.bones[79].quaternion.set(orig.x, orig.y, orig.z, orig.w);
+                                    break;
+                                case 'blue':
+                                    blue.skeleton.bones[79].quaternion.set(orig.x, orig.y, orig.z, orig.w);
+                                    break;
+                            }
+                        });
+                        break;
+                }
             });
         });
 
-        function startGyro() {
+        function startGyro(color) {
             gyro.frequency = 50;
             gyro.startTracking(function (o) {
-                var X = document.getElementById('gyroX');
-                var Y = document.getElementById('gyroY');
-                var Z = document.getElementById('gyroZ');
+                o.color = color;
                 saket.emit('rotation', o);
             });
         }
